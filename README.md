@@ -32,3 +32,12 @@ using venv
 
     $ pip install -r requirements.txt
 
+Ant colony optimization original code from:
+https://github.com/pjmattingly/ant-colony-optimization
+
+Particle Swarm Optimization original code from:
+https://nathanrooy.github.io/posts/2016-08-17/simple-particle-swarm-optimization-with-python/
+
+How to adapt PSO to permutation problems:
+https://www.codeproject.com/Articles/1182794/Solving-the-Travelling-Salesman-Problem-With-a-Par
+
