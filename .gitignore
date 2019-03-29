@@ -1,6 +1,7 @@
 # Created by https://www.gitignore.io/api/emacs,python,pycharm,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=emacs,python,pycharm,visualstudiocode
 
+.DS_Store
 ### Emacs ###
 # -*- mode: gitignore; -*-
 *~
