@@ -3,8 +3,6 @@ tsp_2017.py
 Ernesto Costa, February 2017
 """
 import os
-from sea_perm import *
-from utils import *
 from math import sqrt
 
 # interface
@@ -62,22 +60,6 @@ def distancia(cid_i, cid_j):
     dist = sqrt(dx ** 2 + dy ** 2)
     return dist
 
-if __name__ == '__main__':
-    """This is for my use. You should adapt to your situation!!!"""
-    #filepath = '/Users/ernestojfcosta/data/'
-    filepath = os.getcwd()
-    coord = le_coordenadas_tsp(filepath+'/berlin52.tsp')
-    dicio = dicio_cidades(coord)
-    #print(dicio)
-    meu_merito = merito(dicio)
-    size_cromo = len(dicio)
-    #best = sea_perm(30,20, size_cromo, 0.1,  0.8,tour_sel(3),order_cross,muta_cromo,sel_survivors_elite(0.1), meu_merito)
-    #print(best)
-    
-    #best, stat, stat_average = sea_perm_for_plot(30,20, size_cromo, 0.1,  0.8,tour_sel(3),order_cross,muta_cromo,sel_survivors_elite(0.1), meu_merito)
-    #display_stat_1(stat,stat_average)  
-    
-    
-    boa, best_average = run(5,30,20, size_cromo, 0.1,  0.8,tour_sel(3),order_cross,muta_cromo,sel_survivors_elite(0.1), meu_merito)
-    display_stat_n(boa,best_average)      
+#coord = le_coordenadas_tsp(filepath+'/berlin52.tsp')
+#dicio = dicio_cidades(coord)
     
