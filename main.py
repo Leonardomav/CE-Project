@@ -2,7 +2,7 @@ import ant_colony as aco
 from tsp import le_coordenadas_tsp, dicio_cidades
 
 
-teste = le_coordenadas_tsp('/Users/soren/Work/Masters/CE/CE-Projecto/world.tsp')
+teste = le_coordenadas_tsp('/Users/soren/Work/Masters/CE/CE-Projecto/test_cases/world.tsp')
 dicio = dicio_cidades(teste)
 def distance(start, end):
 	x_distance = abs(start[0] - end[0])
