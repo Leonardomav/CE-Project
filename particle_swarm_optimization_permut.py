@@ -99,7 +99,7 @@ class Particle:
 
         self.position_indiv = new_position
                
-class PSO():
+class ParticleSwarm():
     def __init__(self,costFunc,x0, dicio, num_particles,maxiter):
         global num_dimensions
 

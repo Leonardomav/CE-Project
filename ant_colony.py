@@ -1,6 +1,6 @@
 from threading import Thread
 
-class ant_colony:
+class AntColony:
 	class ant(Thread):
 		def __init__(self, init_location, possible_locations, pheromone_map, distance_callback, alpha, beta, first_pass=False):
 			"""
