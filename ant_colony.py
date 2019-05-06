@@ -409,7 +409,6 @@ class ant_colony:
 		"""
 		
 		for _ in range(self.iterations):
-			print(_)
 			#start the multi-threaded ants, calls ant.run() in a new thread
 			for ant in self.ants:
 				ant.start()
