@@ -1,17 +1,15 @@
-import ant_colony as aco
-from tsp import le_coordenadas_tsp, dicio_cidades
+import antcolony as aco
+from tsp import le_coordenadas_tsp, dicio_cidades, distancia
 
+# load world
+SmallWorld = le_coordenadas_tsp('test_cases/berlin52.tsp')
+BigWorld = le_coordenadas_tsp('test_cases/world.tsp')
+dicio = dicio_cidades(SmallWorld)
 
-teste = le_coordenadas_tsp('/Users/soren/Work/Masters/CE/CE-Projecto/test_cases/world.tsp')
-dicio = dicio_cidades(teste)
-def distance(start, end):
-	x_distance = abs(start[0] - end[0])
-	y_distance = abs(start[1] - end[1])
-	
-	import math
-	return math.sqrt(pow(x_distance, 2) + pow(y_distance, 2))
-
-colony = aco.ant_colony(dicio, distance)
-
+# Preforms ACO
+colony = aco.AntColony(dicio, distancia)
 answer = colony.mainloop()
+print("-- FINISHED --")
 print(answer)
+
+

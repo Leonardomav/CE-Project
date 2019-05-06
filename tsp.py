@@ -2,7 +2,7 @@
 tsp_2017.py
 Ernesto Costa, February 2017
 """
-import os
+
 from math import sqrt
 
 # interface
@@ -11,7 +11,7 @@ from math import sqrt
 def le_coordenadas_tsp(ficheiro):
     """ From a TSP format file return the matrix of coordinates."""
     with  open(ficheiro) as fich_in:
-	# read header
+        # read header
         linha = fich_in.readline()
         while not linha.split()[0].isdigit():
             linha = fich_in.readline()
@@ -24,6 +24,7 @@ def le_coordenadas_tsp(ficheiro):
             coordenadas.append((float(x), float(y)))
     return coordenadas
 
+
 # from coordinates to dictionary
 def dicio_cidades(coordenadas):
     """ Create a dictionary with the cities and their coordinates."""
@@ -32,16 +33,20 @@ def dicio_cidades(coordenadas):
         dicio[i] = (x, y)
     return dicio
 
+
 # fitness
 def merito(dicio_cidades):
     def merito_(indiv):
-        return evaluate(fenotipo(indiv,dicio_cidades))
+        return evaluate(fenotipo(indiv, dicio_cidades))
+
     return merito_
 
-def fenotipo(genotipo,dicio_cidades):
+
+def fenotipo(genotipo, dicio_cidades):
     """ Return ther phenotype."""
     fen = [dicio_cidades[cidade] for cidade in genotipo]
     return fen
+
 
 def evaluate(caminho):
     num_cidades = len(caminho)
@@ -50,6 +55,7 @@ def evaluate(caminho):
         j = (i + 1) % num_cidades
         comp += distancia(caminho[i], caminho[j])
     return comp
+
 
 def distancia(cid_i, cid_j):
     """ Euclidian distance."""
@@ -60,6 +66,5 @@ def distancia(cid_i, cid_j):
     dist = sqrt(dx ** 2 + dy ** 2)
     return dist
 
-#coord = le_coordenadas_tsp(filepath+'/berlin52.tsp')
-#dicio = dicio_cidades(coord)
-    
+# coord = le_coordenadas_tsp(filepath+'/berlin52.tsp')
+# dicio = dicio_cidades(coord)
