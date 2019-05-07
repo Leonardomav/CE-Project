@@ -57,7 +57,7 @@ def evaluate(caminho):
     return comp
 
 
-def distancia(cid_i, cid_j):
+def distance(cid_i, cid_j):
     """ Euclidian distance."""
     x_i, y_i = cid_i
     x_j, y_j = cid_j
