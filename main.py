@@ -16,8 +16,8 @@ def eval_solution(distance_callback):
 	return total_solution_distance
 
 initial = [ x for x in range(len(dicio))]
-ParticleSwarm(eval_solution(distance),initial, dicio, num_particles=50,maxiter=80)
-colony = aco.AntColony(dicio, distance)
+#ParticleSwarm(eval_solution(distance),initial, dicio, num_particles=50,maxiter=80)
+colony = AntColony(dicio, distance)
 
 answer = colony.mainloop()
 print("-- FINISHED --")

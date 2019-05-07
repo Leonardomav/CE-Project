@@ -1,7 +1,7 @@
 from threading import Thread
 
 class AntColony:
-	class ant(Thread):
+	class ant():
 		def __init__(self, init_location, possible_locations, pheromone_map, distance_callback, alpha, beta, first_pass=False):
 			"""
 			initialized an ant, to traverse the map
@@ -409,14 +409,10 @@ class AntColony:
 		"""
 		
 		for _ in range(self.iterations):
+			print(_, "/", self.iterations)
 			#start the multi-threaded ants, calls ant.run() in a new thread
 			for ant in self.ants:
-				ant.start()
-			
-			#source: http://stackoverflow.com/a/11968818/5343977
-			#wait until the ants are finished, before moving on to modifying shared resources
-			for ant in self.ants:
-				ant.join()
+				ant.+run()
 			
 			for ant in self.ants:	
 				#update ant_updated_pheromone_map with this ant's constribution of pheromones along its route
