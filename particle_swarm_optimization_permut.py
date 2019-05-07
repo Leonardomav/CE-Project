@@ -57,9 +57,6 @@ class Particle:
 
         total_velocity = vel_cognitive + vel_social + vel_personal
 
-        print("Position Indiv", len(self.position_indiv))
-        print("Vel/Total velocity", vel_social/total_velocity)
-        print("Err Best local", err_best_local)
         self.personal_section = math.floor(len(self.position_indiv) * (vel_personal / total_velocity))
         if vel_cognitive > 0:
             self.cognitive_section = math.floor(len(self.position_indiv) * (vel_cognitive / total_velocity))
@@ -68,8 +65,6 @@ class Particle:
 
     # update the particle position based off new velocity updates
     def update_position(self,pos_best_local):
-        print("Pos Best Indiv", len(self.pos_best_indiv))
-        print("Sections", self.personal_section, self.cognitive_section, self.social_section)
         personal_start_index = random.randint(0, len(self.pos_best_indiv) - self.personal_section)
         cognitive_start_index = random.randint(0, len(self.pos_best_indiv) - self.cognitive_section)
         social_start_index = random.randint(0, len(self.pos_best_indiv) - self.social_section)
@@ -81,24 +76,33 @@ class Particle:
 
         new_position = []
 
+        aux_mask = []
         for x, y, index in zip(availability_mask, personal_mask, range(len(personal_mask))):
             if x and y:
                 new_position.append(index)
-        aux_mask = availability_mask and personal_mask
+                aux_mask.append(True)
+            else:
+                aux_mask.append(False)
         availability_mask = [x ^ y for x, y in zip(availability_mask, aux_mask)]
 
+        aux_mask = []
         for x, y, index in zip(availability_mask, cognitive_mask, range(len(cognitive_mask))):
             if x and y:
                 new_position.append(index)
-        aux_mask = availability_mask and cognitive_mask
+                aux_mask.append(True)
+            else:
+                aux_mask.append(False)
         availability_mask = [x ^ y for x, y in zip(availability_mask, aux_mask)]
 
+        aux_mask = []
         for x, y, index in zip(availability_mask, social_mask, range(len(social_mask))):
             if x and y:
                 new_position.append(index)
-        aux_mask = availability_mask and social_mask
+                aux_mask.append(True)
+            else:
+                aux_mask.append(False)
         availability_mask = [x ^ y for x, y in zip(availability_mask, aux_mask)]
-
+        
         for x in self.position_indiv:
             if availability_mask[x]:
                 new_position.append(x)
