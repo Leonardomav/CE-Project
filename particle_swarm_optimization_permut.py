@@ -11,15 +11,6 @@
 import random
 import math
 
-#--- COST FUNCTION ------------------------------------------------------------+
-
-# function we are attempting to optimize (minimize)
-def func1(x):
-    total=0
-    for i in range(len(x)):
-        total+=x[i]**2
-    return total
-
 #--- MAIN ---------------------------------------------------------------------+
 
 class Particle:
