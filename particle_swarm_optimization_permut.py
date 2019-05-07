@@ -31,10 +31,11 @@ class Particle:
         self.personal_section = 0
         self.cognitive_section = 0
         self.social_section = 0
+        random.seed(2)
 
     # evaluate current fitness
     def evaluate(self,costFunc, dicio):
-        self.err_i=costFunc(self.position_indiv, dicio)
+        self.err_indiv=costFunc(self.position_indiv, dicio)
 
         # check to see if the current position is an individual best
         if self.err_indiv < self.err_best_indiv or self.err_best_indiv==-1:
@@ -50,12 +51,15 @@ class Particle:
         r1=random.random()
         r2=random.random()
 
-        vel_personal = w * (1 / self.err_indiv)
-        vel_cognitive = c1 * r1 * (1 / self.err_best_indiv)
-        vel_social = c2 * r2 * (1 / err_best_local)
+        vel_personal = w * (1 / self.err_indiv) if self.err_indiv > 0 else 0
+        vel_cognitive = c1 * r1 * (1 / self.err_best_indiv) if self.err_best_indiv > 0 else 0
+        vel_social = c2 * r2 * (1 / err_best_local) if err_best_local > 0 else 0
 
         total_velocity = vel_cognitive + vel_social + vel_personal
 
+        print("Position Indiv", len(self.position_indiv))
+        print("Vel/Total velocity", vel_social/total_velocity)
+        print("Err Best local", err_best_local)
         self.personal_section = math.floor(len(self.position_indiv) * (vel_personal / total_velocity))
         if vel_cognitive > 0:
             self.cognitive_section = math.floor(len(self.position_indiv) * (vel_cognitive / total_velocity))
@@ -64,6 +68,8 @@ class Particle:
 
     # update the particle position based off new velocity updates
     def update_position(self,pos_best_local):
+        print("Pos Best Indiv", len(self.pos_best_indiv))
+        print("Sections", self.personal_section, self.cognitive_section, self.social_section)
         personal_start_index = random.randint(0, len(self.pos_best_indiv) - self.personal_section)
         cognitive_start_index = random.randint(0, len(self.pos_best_indiv) - self.cognitive_section)
         social_start_index = random.randint(0, len(self.pos_best_indiv) - self.social_section)
@@ -98,7 +104,7 @@ class Particle:
                 new_position.append(x)
 
         self.position_indiv = new_position
-               
+
 class ParticleSwarm():
     def __init__(self,costFunc,x0, dicio, num_particles,maxiter):
         global num_dimensions
@@ -121,9 +127,9 @@ class ParticleSwarm():
                 swarm[j].evaluate(costFunc, dicio)
 
                 # determine if current particle is the best (globally)
-                if swarm[j].err_i < err_best_g or err_best_g == -1:
+                if swarm[j].err_indiv < err_best_g or err_best_g == -1:
                     pos_best_g=list(swarm[j].position_indiv)
-                    err_best_g=float(swarm[j].err_i)
+                    err_best_g=float(swarm[j].err_indiv)
 
             # cycle through swarm and update velocities and position
             for j in range(num_particles):
