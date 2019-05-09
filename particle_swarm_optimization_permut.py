@@ -11,15 +11,6 @@
 import random
 import math
 
-#--- COST FUNCTION ------------------------------------------------------------+
-
-# function we are attempting to optimize (minimize)
-def func1(x):
-    total=0
-    for i in range(len(x)):
-        total+=x[i]**2
-    return total
-
 #--- MAIN ---------------------------------------------------------------------+
 
 class Particle:
@@ -31,7 +22,6 @@ class Particle:
         self.personal_section = 0
         self.cognitive_section = 0
         self.social_section = 0
-        random.seed(2)
 
     # evaluate current fitness
     def evaluate(self,costFunc, dicio):
