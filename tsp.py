@@ -8,9 +8,10 @@ from math import sqrt
 # interface
 # from file to coordinates
 
+
 def le_coordenadas_tsp(ficheiro):
     """ From a TSP format file return the matrix of coordinates."""
-    with  open(ficheiro) as fich_in:
+    with open(ficheiro) as fich_in:
         # read header
         linha = fich_in.readline()
         while not linha.split()[0].isdigit():
