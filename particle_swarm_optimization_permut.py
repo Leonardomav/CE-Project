@@ -35,19 +35,16 @@ class Particle:
             self.err_best_indiv = self.err_indiv
 
     # update new particle velocity
-    def update_velocity(self, err_best_local):
-        # constant inertia weight (how much to weigh the previous velocity)
-        w = 0.5
-        c1 = 1        # cognitive constant
-        c2 = 2        # social constant
-
+    def update_velocity(self, err_best_local, weight=0.5,
+                        cognitive_param=1, social_param=2):
         r1 = random.random()
         r2 = random.random()
 
-        vel_personal = w * (1 / self.err_indiv) if self.err_indiv > 0 else 0
-        vel_cognitive = c1 * r1 * \
+        vel_personal = weight * \
+            (1 / self.err_indiv) if self.err_indiv > 0 else 0
+        vel_cognitive = cognitive_param * r1 * \
             (1 / self.err_best_indiv) if self.err_best_indiv > 0 else 0
-        vel_social = c2 * r2 * \
+        vel_social = social_param * r2 * \
             (1 / err_best_local) if err_best_local > 0 else 0
 
         total_velocity = vel_cognitive + vel_social + vel_personal
@@ -124,7 +121,8 @@ class Particle:
 
 
 class ParticleSwarm():
-    def __init__(self, costFunc, x0, dicio, num_particles, maxiter):
+    def __init__(self, costFunc, x0, dicio, num_particles,
+                 maxiter, weight, cognitive_param, social_param):
         global num_dimensions
 
         num_dimensions = len(x0)
@@ -161,7 +159,8 @@ class ParticleSwarm():
 
             # cycle through swarm and update velocities and position
             for j in range(num_particles):
-                swarm[j].update_velocity(err_best_g)
+                swarm[j].update_velocity(
+                    err_best_g, weight, cognitive_param, social_param)
                 swarm[j].update_position(pos_best_g)
             i += 1
             end = timer()
