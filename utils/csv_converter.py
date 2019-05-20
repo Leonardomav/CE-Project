@@ -13,11 +13,11 @@ class CsvConverter():
         ''' Convert PSO data to CSV file '''
         csv = open(self.filename, "w")
 
-        population_initialization_title_row = "Population Initialization, Population Size, Iterations, Weight, Cognitive, Social\n"
+        population_initialization_title_row = "Population Initialization,Population Size,Iterations,Weight,Cognitive,Social\n"
         csv.write(population_initialization_title_row)
         csv.write(str(self.data["population_initialization_time"])+ "," + str(self.data["population_size"]) + "," + str(self.data["iterations"]) + "," + str(self.data["weight"]) + "," + str(self.data["cognitive"]) + "," + str(self.data["social"]) + "\n")
 
-        data_title_row = "Iteration, Best Individual (Position), Best Individual (Fitness), Fitness Average, Calculation Time\n"
+        data_title_row = "Iteration,Best Individual (Position),Best Individual (Fitness),Fitness Average,Calculation Time\n"
         csv.write(data_title_row)
 
         generation = 0
@@ -32,11 +32,11 @@ class CsvConverter():
         ''' Convert ACO data to CSV file '''
         csv = open(self.filename, "w")
 
-        population_initialization_title_row = "Population Initialization, Population Size, Iterations, Alpha, Beta, Evaporation Coefficient\n"
+        population_initialization_title_row = "Population Initialization,Population Size,Iterations,Alpha,Beta,Evaporation Coefficient\n"
         csv.write(population_initialization_title_row)
         csv.write(str(self.data["population_initialization_time"])+ "," + str(self.data["population_size"]) + "," + str(self.data["iterations"]) + "," + str(self.data["alpha"]) + "," + str(self.data["beta"]) + "," + str(self.data["evaporation_coeficient"]) + "\n")
 
-        data_title_row = "Iteration, Best Individual (Position), Best Individual (Fitness), Fitness Average, Calculation Time\n"
+        data_title_row = "Iteration,Best Individual (Position),Best Individual (Fitness),Fitness Average,Calculation Time\n"
         csv.write(data_title_row)
 
         generation = 0
