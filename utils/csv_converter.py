@@ -1,7 +1,5 @@
 ''' Module to convert data to CSV '''
 
-from pprint import pprint
-
 class CsvConverter():
     ''' Converter for algorithm data to CSV '''
 

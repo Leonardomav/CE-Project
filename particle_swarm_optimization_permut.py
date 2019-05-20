@@ -122,7 +122,7 @@ class Particle:
             sm = difflib.SequenceMatcher(None, self.position_indiv, self.predator_position)
             distance = sm.ratio() * len(self.cities)
             vel_fear = r3 * 0.1*len(self.cities)*math.exp(-(10/len(self.cities) * distance))
-        
+
         total_velocity = vel_cognitive + vel_social + vel_personal + vel_fear
 
         self.personal_section = math.floor(
@@ -172,7 +172,6 @@ class Particle:
         availability_mask = [
             x ^ y for x, y in zip(
                 availability_mask, aux_mask)]
-
         aux_mask = []
         for x, y in zip(
                 availability_mask, cognitive_mask):
@@ -249,7 +248,6 @@ class ParticleSwarm():
         budget = timer()
         budget_end = timer()
         while (budget_end - budget) < time_budget:
-            # print i,err_best_g
             # cycle through particles in swarm and evaluate fitness
             average_fitness = 0.0
             self.generation_calculation_times.append(0)
@@ -257,7 +255,6 @@ class ParticleSwarm():
             for j in range(num_particles):
                 if random_immigrant > random.random():
                     swarm[j] = Particle(dicio)
-                #print(budget_end - budget, "/", time_budget, " ", j, "/", num_particles)
                 t1_start = timer()
                 swarm[j].evaluate(costFunc, dicio)
                 t1_end = timer()
@@ -289,7 +286,6 @@ class ParticleSwarm():
             self.best_individuals.append((pos_best_g, err_best_g))
             budget_end = timer()
 
-        # print final results
         print('FINAL:')
         print(pos_best_g)
         print(err_best_g)
