@@ -40,11 +40,11 @@ def run_pso(filename, map_param, num_particles,
         small_world_solution = read_solution()
         dicio = dicio_cidades(small_world)
     elif map_param is 2:
-        medium_world = le_coordenadas_tsp("test_cases/usa.tsp")
+        medium_world = le_coordenadas_tsp("test_cases/kroA100.tsp")
         medium_world_solution = read_solution()
         dicio = dicio_cidades(medium_world)
     elif map_param is 3:
-        large_world = le_coordenadas_tsp("test_cases/monalisa.tsp")
+        large_world = le_coordenadas_tsp("test_cases/ch150.tsp")
         large_world_solution = read_solution()
         dicio = dicio_cidades(large_world)
 
@@ -82,11 +82,11 @@ def run_aco(filename, map_param, num_ants, maxiter,
         small_world_solution = read_solution()
         dicio = dicio_cidades(small_world)
     elif map_param is 2:
-        medium_world = le_coordenadas_tsp("test_cases/usa.tsp")
+        medium_world = le_coordenadas_tsp("test_cases/kroA100.tsp")
         medium_world_solution = read_solution()
         dicio = dicio_cidades(medium_world)
     elif map_param is 3:
-        large_world = le_coordenadas_tsp("test_cases/monalisa.tsp")
+        large_world = le_coordenadas_tsp("test_cases/ch150.tsp")
         large_world_solution = read_solution()
         dicio = dicio_cidades(large_world)
 
