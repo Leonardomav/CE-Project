@@ -10,6 +10,7 @@ def read_solution():
     with open("test_cases/berlin52.opt.tour") as fp:
         solution = fp.readlines()
         solution = list(map(int, solution[4:len(solution) - 1]))
+        solution = [x - 1 for x in solution]
         return solution
 
 
@@ -20,8 +21,15 @@ def eval_solution(distance_callback, dicio):
             total_distance += distance_callback(
                 dicio[solution[i - 1]], dicio[solution[i]])
         return total_distance
+    def evaluate(solution, dicio):
+        num_cidades = len(solution)
+        comp = 0
+        for i in range(num_cidades):
+                j = (i + 1) % num_cidades
+                comp += distance_callback(dicio[solution[i]], dicio[solution[j]])
+        return comp
 
-    return total_solution_distance
+    return evaluate
 
 
 def run_pso(filename, map_param, num_particles,
@@ -82,6 +90,10 @@ def run_aco(filename, map_param, num_ants, maxiter,
         large_world_solution = read_solution()
         dicio = dicio_cidades(large_world)
 
+    sol = [0, 21, 48, 31, 17, 30, 20, 16, 2, 44, 18, 40, 7, 8, 9, 42, 32, 50, 10, 51, 13, 12, 46, 25, 26, 27, 11, 24, 3, 47, 23, 5, 4, 14, 37, 39, 36, 38, 35, 34, 33, 43, 45, 15, 28, 49, 19, 22, 29, 41, 6, 1]
+    f = eval_solution(distance, dicio)
+    print(f(sol, dicio))
+
     colony = AntColony(
         dicio,
         distance,
@@ -108,6 +120,7 @@ def run_aco(filename, map_param, num_ants, maxiter,
 
 
 def main():
+    
     ''' Main function worker '''
     parser = argparse.ArgumentParser(
         description="Evolutionary Computing project. Ant Colony Optimization and Particle Swarm Optimization implementations for Travelling Salesperson Problem.")

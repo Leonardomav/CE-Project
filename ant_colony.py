@@ -455,7 +455,7 @@ class AntColony:
         budget_end = timer()
         while (budget_end - budget_start) < self.time_budget:
             # start the multi-threaded ants, calls ant.run() in a new thread
-            print(budget_end - budget_start, "/", self.time_budget)
+            #print(budget_end - budget_start, "/", self.time_budget)
             for ant in self.ants:
                 ant.start()
 

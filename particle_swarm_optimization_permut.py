@@ -153,7 +153,7 @@ class ParticleSwarm():
             average_fitness = 0.0
             self.generation_calculation_times.append(0)
             for j in range(num_particles):
-                print(budget_end - budget, "/", time_budget, " ", j, "/", num_particles)
+                #print(budget_end - budget, "/", time_budget, " ", j, "/", num_particles)
                 t1_start = timer()
                 swarm[j].evaluate(costFunc, dicio)
                 t1_end = timer()
