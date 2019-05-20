@@ -170,6 +170,9 @@ def main():
 
     args = parser.parse_args()
 
+    if args.aco == False and args.pso == False:
+            print("DEBUGGING")
+            run_pso('a.csv', 1, 10, 10, 0.5, 1, 2)
     if args.file is None:
         print("No storage file provided")
     elif args.population is None:

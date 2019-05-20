@@ -16,8 +16,10 @@ from timeit import default_timer as timer
 
 
 class Particle:
-    def __init__(self, x0):
-        self.position_indiv = x0          # particle position
+    def __init__(self, dicio):
+        cities = [x for x in dicio.keys()]
+        random.shuffle(cities)
+        self.position_indiv = cities        # particle position
         self.pos_best_indiv = []          # best position individual
         self.err_best_indiv = -1          # best error individual
         self.err_indiv = -1               # error individual
@@ -137,7 +139,7 @@ class ParticleSwarm():
         swarm = []
         start = timer()
         for i in range(num_particles):
-            swarm.append(Particle(x0))
+            swarm.append(Particle(dicio))
         end = timer()
         self.population_initialization_time = end - start
 
