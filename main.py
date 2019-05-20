@@ -89,8 +89,8 @@ def run_aco(filename, map_param, num_ants, maxiter,
         alpha=alpha,
         beta=beta,
         pheromone_evaporation_coefficient=evaporation_coeficient,
-        iterations=maxiter)
-    aco_results = colony.mainloop()
+        time_budget=maxiter)
+    colony.mainloop()
 
     data = {"best_individuals": colony.best_individuals,
             "fitness_averages": colony.fitness_averages,

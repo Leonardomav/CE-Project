@@ -171,7 +171,7 @@ class AntColony:
             return None
 
     def __init__(self, nodes, distance_callback, start=None, ant_count=50, alpha=.5, beta=1.2,
-                 pheromone_evaporation_coefficient=.40, pheromone_constant=1000.0, iterations=80):
+                 pheromone_evaporation_coefficient=.40, pheromone_constant=1000.0, time_budget=80):
         """
         initializes an ant colony (houses a number of worker ants that will traverse a map to find an optimal route as per ACO [Ant Colony Optimization])
         source: https://en.wikipedia.org/wiki/Ant_colony_optimization_algorithms
@@ -215,7 +215,7 @@ class AntColony:
 
         first_pass -> flags a first pass for the ants, which triggers unique behavior
 
-        iterations -> how many iterations to let the ants traverse the map
+        time_budget -> how much time can the algorithm calculate for
 
         shortest_distance -> the shortest distance seen from an ant traversal
 
@@ -312,14 +312,14 @@ class AntColony:
 
         self.pheromone_constant = float(pheromone_constant)
 
-        # iterations
-        if (not isinstance(iterations, int)):
-            raise TypeError("iterations must be int")
+        # time_budget
+        if (not isinstance(time_budget, int)):
+            raise TypeError("time_budget must be int")
 
-        if iterations < 0:
-            raise ValueError("iterations must be >= 0")
+        if time_budget < 0:
+            raise ValueError("time_budget must be >= 0")
 
-        self.iterations = iterations
+        self.time_budget = time_budget
 
         # other internal variable init
         self.first_pass = True
@@ -448,11 +448,14 @@ class AntColony:
                 calls:
                 _update_pheromones()
                 ant.run()
-        runs the simulation self.iterations times
+        runs the simulation self.time_budget times
         """
 
-        for _ in range(self.iterations):
+        budget_start = timer()
+        budget_end = timer()
+        while (budget_end - budget_start) < self.time_budget:
             # start the multi-threaded ants, calls ant.run() in a new thread
+            print(budget_end - budget_start, "/", self.time_budget)
             for ant in self.ants:
                 ant.start()
 
@@ -507,6 +510,7 @@ class AntColony:
                 len(self.nodes), value=0)
             end = timer()
             self.generation_calculation_times[-1] += end - start
+            budget_end = timer()
 
         # translate shortest path back into callers node id's
         ret = []

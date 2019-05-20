@@ -124,7 +124,7 @@ class Particle:
 
 class ParticleSwarm():
     def __init__(self, costFunc, x0, dicio, num_particles,
-                 maxiter, weight, cognitive_param, social_param):
+                 time_budget, weight, cognitive_param, social_param):
         global num_dimensions
 
         num_dimensions = len(x0)
@@ -145,13 +145,15 @@ class ParticleSwarm():
 
         # begin optimization loop
         i = 0
-        while i < maxiter:
+        budget = timer()
+        budget_end = timer()
+        while (budget_end - budget) < time_budget:
             # print i,err_best_g
             # cycle through particles in swarm and evaluate fitness
             average_fitness = 0.0
             self.generation_calculation_times.append(0)
             for j in range(num_particles):
-                print(i, "/", maxiter, " ", j, "/", num_particles)
+                print(budget_end - budget, "/", time_budget, " ", j, "/", num_particles)
                 t1_start = timer()
                 swarm[j].evaluate(costFunc, dicio)
                 t1_end = timer()
@@ -178,6 +180,7 @@ class ParticleSwarm():
             average_fitness = average_fitness / num_particles
             self.fitness_averages.append(average_fitness)
             self.best_individuals.append((pos_best_g, err_best_g))
+            budget_end = timer()
 
         # print final results
         print('FINAL:')
