@@ -12,10 +12,9 @@ def read_solution():
 
 
 # load world
-SmallWorld = le_coordenadas_tsp('test_cases/berlin52.tsp')
+SmallWorld = le_coordenadas_tsp('test_cases/monalisa.tsp')
 SmallWorld_sol = read_solution()
 dicio = dicio_cidades(SmallWorld)
-
 
 def eval_solution(distance_callback):
     def total_solution_distance(solution, dicio):
@@ -48,4 +47,5 @@ def main():
     converter.pso_to_csv()
 
 
-main()
+if __name__ == "__main__":
+	main()

@@ -1,6 +1,6 @@
 from threading import Thread
-
-
+from tsp import le_coordenadas_tsp, dicio_cidades, distance
+from timeit import default_timer as timer
 class AntColony:
     class ant(Thread):
         def __init__(self, init_location, possible_locations, pheromone_map,
@@ -35,6 +35,7 @@ class AntColony:
             self.alpha = alpha
             self.beta = beta
             self.first_pass = first_pass
+            self.calc_time = 0
 
             # append start location to route, before doing random walk
             self._update_route(init_location)
@@ -52,10 +53,12 @@ class AntColony:
                     do pheromone updates
                     check for new possible optimal solution with this ants latest tour
             """
+            start_time = timer()
             while self.possible_locations:
                 next = self._pick_path()
                 self._traverse(self.location, next)
-
+            end_time = timer()
+            self.calc_time = end_time - start_time
             self.tour_complete = True
 
         def _pick_path(self):
@@ -216,8 +219,14 @@ class AntColony:
 
         shortest_distance -> the shortest distance seen from an ant traversal
 
-        shortets_path_seen -> the shortest path seen from a traversal (shortest_distance is the distance along this path)
+        shortest_path_seen -> the shortest path seen from a traversal (shortest_distance is the distance along this path)
+
+
         """
+        self.best_individuals = [],
+        self.fitness_averages = []
+        self.generation_calculation_times = []
+        self.population_initialization_time = []
         # nodes
         if not isinstance(nodes, dict):
             raise TypeError("nodes must be dict")
@@ -414,7 +423,7 @@ class AntColony:
         given an ant, populate ant_updated_pheromone_map with pheromone values according to ACO
         along the ant's route
         called from:
-                mainloop()
+                mainloop()i
                 ( before _update_pheromone_map() )
         """
         route = ant.get_route()
@@ -443,6 +452,7 @@ class AntColony:
         """
 
         for _ in range(self.iterations):
+            print(_)
             # start the multi-threaded ants, calls ant.run() in a new thread
             for ant in self.ants:
                 ant.start()
@@ -450,9 +460,13 @@ class AntColony:
             # source: http://stackoverflow.com/a/11968818/5343977
             # wait until the ants are finished, before moving on to modifying
             # shared resources
+            self.generation_calculation_times.append(0)
             for ant in self.ants:
                 ant.join()
+                self.generation_calculation_times[-1] += ant.calc_time
 
+            start = timer()
+            fit_total = 0
             for ant in self.ants:
                 # update ant_updated_pheromone_map with this ant's
                 # constribution of pheromones along its route
@@ -467,10 +481,13 @@ class AntColony:
                     self.shortest_path_seen = ant.get_route()
 
                 # if we see a shorter path, then save for return
+                fit_total += ant.get_distance_traveled
                 if ant.get_distance_traveled() < self.shortest_distance:
                     self.shortest_distance = ant.get_distance_traveled()
                     self.shortest_path_seen = ant.get_route()
 
+            self.best_individuals.append(self.shortest_path_seen)
+            self.fitness_averages.append(fit_total / self.ant_count)
             # decay current pheromone values and add all pheromone values we
             # saw during traversal (from ant_updated_pheromone_map)
             self._update_pheromone_map()
@@ -480,12 +497,17 @@ class AntColony:
                 self.first_pass = False
 
             # reset all ants to default for the next iteration
+            start2 = timer()
             self._init_ants(self.start)
+            end2 = timer()
+            self.population_initialization_time += end2 - start2
 
             # reset ant_updated_pheromone_map to record pheromones for ants on
             # next pass
             self.ant_updated_pheromone_map = self._init_matrix(
                 len(self.nodes), value=0)
+            end = timer()
+            self.generation_calculation_times[-1] += end - start
 
         # translate shortest path back into callers node id's
         ret = []
@@ -493,3 +515,9 @@ class AntColony:
             ret.append(self.id_to_key[id])
 
         return ret
+
+if __name__ == "__main__":
+    SmallWorld = le_coordenadas_tsp('test_cases/monalisa.tsp')
+    dicio = dicio_cidades(SmallWorld)
+    colony = AntColony(dicio, distance)
+    answer = colony.mainloop()

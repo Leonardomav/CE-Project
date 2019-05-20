@@ -149,9 +149,14 @@ class ParticleSwarm():
             # print i,err_best_g
             # cycle through particles in swarm and evaluate fitness
             average_fitness = 0.0
-            start = timer()
+            self.generation_calculation_times.append(0)
             for j in range(num_particles):
+                print(i, "/", maxiter, " ", j, "/", num_particles)
+                t1_start = timer()
                 swarm[j].evaluate(costFunc, dicio)
+                t1_end = timer()
+                t1 = t1_end - t1_start
+                self.generation_calculation_times[-1] += t1
                 average_fitness += swarm[j].err_indiv
 
                 # determine if current particle is the best (globally)
@@ -161,11 +166,13 @@ class ParticleSwarm():
 
             # cycle through swarm and update velocities and position
             for j in range(num_particles):
+                t2_start = timer()
                 swarm[j].update_velocity(err_best_g)
                 swarm[j].update_position(pos_best_g)
+                t2_end = timer()
+                t2 = t2_end - t2_start
+                self.generation_calculation_times[-1] += t2
             i += 1
-            end = timer()
-            self.generation_calculation_times.append(end - start)
 
             average_fitness = average_fitness / num_particles
             self.fitness_averages.append(average_fitness)
