@@ -92,9 +92,18 @@ def run_aco(filename, map_param, num_ants, maxiter,
         iterations=maxiter)
     aco_results = colony.mainloop()
 
+    data = {"best_individuals": colony.best_individuals,
+            "fitness_averages": colony.fitness_averages,
+            "generation_calculation_times": colony.generation_calculation_times,
+            "population_initialization_time": colony.population_initialization_time,
+            "population_size": num_ants,
+            "iterations": maxiter,
+            "alpha": alpha,
+            "beta": beta,
+            "evaporation_coeficient": evaporation_coeficient}
     print(" ------------------ Converting ---------------------")
-    # converter = CsvConverter(filename, data)
-    # converter.aco_to_csv()
+    converter = CsvConverter(filename, data)
+    converter.aco_to_csv()
     print(" ------------------ Ending ACO ---------------------")
 
 

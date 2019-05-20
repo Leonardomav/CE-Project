@@ -223,10 +223,10 @@ class AntColony:
 
 
         """
-        self.best_individuals = [],
+        self.best_individuals = []
         self.fitness_averages = []
         self.generation_calculation_times = []
-        self.population_initialization_time = []
+        self.population_initialization_time = 0
         # nodes
         if not isinstance(nodes, dict):
             raise TypeError("nodes must be dict")
@@ -452,7 +452,6 @@ class AntColony:
         """
 
         for _ in range(self.iterations):
-            print(_)
             # start the multi-threaded ants, calls ant.run() in a new thread
             for ant in self.ants:
                 ant.start()
@@ -481,7 +480,7 @@ class AntColony:
                     self.shortest_path_seen = ant.get_route()
 
                 # if we see a shorter path, then save for return
-                fit_total += ant.get_distance_traveled
+                fit_total += ant.get_distance_traveled()
                 if ant.get_distance_traveled() < self.shortest_distance:
                     self.shortest_distance = ant.get_distance_traveled()
                     self.shortest_path_seen = ant.get_route()
