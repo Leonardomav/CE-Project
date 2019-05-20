@@ -54,7 +54,12 @@ def run_pso(filename, map_param, num_particles,
     data = {"best_individuals": pso_results.best_individuals,
             "fitness_averages": pso_results.fitness_averages,
             "generation_calculation_times": pso_results.generation_calculation_times,
-            "population_initialization_time": pso_results.population_initialization_time}
+            "population_initialization_time": pso_results.population_initialization_time,
+            "population_size": num_particles,
+            "iterations": maxiter,
+            "weight": weight,
+            "cognitive": cognitive,
+            "social": social}
 
     print(" ------------------ Converting ---------------------")
     converter = CsvConverter(filename, data)
@@ -121,10 +126,10 @@ def main():
         help="Inital Population",
         dest="population")
     parser.add_argument(
-        "-g",
-        "--number-generations",
-        help="Number of Generations",
-        dest="generations")
+        "-i",
+        "--number-iterations",
+        help="Number of Iterations",
+        dest="iterations")
     parser.add_argument("-m", "--map", help="Map to run", dest="map")
 
     # PSO Params
@@ -169,8 +174,8 @@ def main():
         print("No storage file provided")
     elif args.population is None:
         print("Lacking initial population value")
-    elif args.generations is None:
-        print("Lacking number of generations value")
+    elif args.iterations is None:
+        print("Lacking number of iterations value")
     elif args.map is None:
         print("Lacking map to test")
     elif args.pso:
@@ -181,7 +186,7 @@ def main():
                 args.file, int(
                     args.map), int(
                     args.population), int(
-                    args.generations), float(
+                    args.iterations), float(
                     args.weight), float(
                         args.cognitive), float(
                             args.social))
@@ -193,7 +198,7 @@ def main():
                 args.file, int(
                     args.map), int(
                     args.population), int(
-                    args.generations), float(
+                    args.iterations), float(
                     args.alpha), float(
                         args.beta), float(
                             args.evaporation_coeficient))
