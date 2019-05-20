@@ -119,7 +119,6 @@ class Particle:
             (1 / err_best_local) if err_best_local > 0 else 0
         vel_fear = 0
         if random.random() < fear_prob:
-            print("Boo!")
             sm = difflib.SequenceMatcher(None, self.position_indiv, self.predator_position)
             distance = sm.ratio() * len(self.cities)
             vel_fear = r3 * 0.1*len(self.cities)*math.exp(-(10/len(self.cities) * distance))
@@ -137,9 +136,6 @@ class Particle:
         if vel_fear > 0:
             self.fear_section = math.floor(
                 len(self.position_indiv) * (vel_fear / total_velocity))
-            print(self.fear_section)
-        if len(self.position_indiv) > 52:
-            print("a")
 
     # update the particle position based off new velocity updates
     def update_position(self, pos_best_local):
@@ -176,8 +172,6 @@ class Particle:
         availability_mask = [
             x ^ y for x, y in zip(
                 availability_mask, aux_mask)]
-        if len(new_position) > 52:
-            print('a')
 
         aux_mask = []
         for x, y in zip(
@@ -192,8 +186,6 @@ class Particle:
         availability_mask = [
             x ^ y for x, y in zip(
                 availability_mask, aux_mask)]
-        if len(new_position) > 52:
-            print('a')
 
         aux_mask = []
         for x, y in zip(
@@ -208,8 +200,6 @@ class Particle:
         availability_mask = [
             x ^ y for x, y in zip(
                 availability_mask, aux_mask)]
-        if len(new_position) > 52:
-            print('a')
 
         aux_mask = []
         for x, y in zip(
@@ -229,8 +219,6 @@ class Particle:
         for x in self.position_indiv:
             if availability_mask[x]:
                 new_position.append(x)
-        if len(new_position) > 52:
-            print('a')
         self.position_indiv = new_position
 
 
