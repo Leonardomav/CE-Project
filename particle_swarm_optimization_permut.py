@@ -119,7 +119,6 @@ class Particle:
             (1 / err_best_local) if err_best_local > 0 else 0
         vel_fear = 0
         if random.random() < fear_prob:
-            print("Boo!")
             sm = difflib.SequenceMatcher(None, self.position_indiv, self.predator_position)
             distance = sm.ratio() * len(self.cities)
             vel_fear = r3 * 0.1*len(self.cities)*math.exp(-(10/len(self.cities) * distance))
@@ -137,9 +136,7 @@ class Particle:
         if vel_fear > 0:
             self.fear_section = math.floor(
                 len(self.position_indiv) * (vel_fear / total_velocity))
-            print(self.fear_section)
         if len(self.position_indiv) > 52:
-            print("a")
 
     # update the particle position based off new velocity updates
     def update_position(self, pos_best_local):
@@ -177,7 +174,6 @@ class Particle:
             x ^ y for x, y in zip(
                 availability_mask, aux_mask)]
         if len(new_position) > 52:
-            print('a')
 
         aux_mask = []
         for x, y in zip(
@@ -193,7 +189,6 @@ class Particle:
             x ^ y for x, y in zip(
                 availability_mask, aux_mask)]
         if len(new_position) > 52:
-            print('a')
 
         aux_mask = []
         for x, y in zip(
@@ -209,7 +204,6 @@ class Particle:
             x ^ y for x, y in zip(
                 availability_mask, aux_mask)]
         if len(new_position) > 52:
-            print('a')
 
         aux_mask = []
         for x, y in zip(
@@ -230,7 +224,6 @@ class Particle:
             if availability_mask[x]:
                 new_position.append(x)
         if len(new_position) > 52:
-            print('a')
         self.position_indiv = new_position
 
 
@@ -261,7 +254,6 @@ class ParticleSwarm():
         budget = timer()
         budget_end = timer()
         while (budget_end - budget) < time_budget:
-            # print i,err_best_g
             # cycle through particles in swarm and evaluate fitness
             average_fitness = 0.0
             self.generation_calculation_times.append(0)
@@ -269,7 +261,6 @@ class ParticleSwarm():
             for j in range(num_particles):
                 if random_immigrant > random.random():
                     swarm[j] = Particle(dicio)
-                #print(budget_end - budget, "/", time_budget, " ", j, "/", num_particles)
                 t1_start = timer()
                 swarm[j].evaluate(costFunc, dicio)
                 t1_end = timer()
@@ -301,7 +292,6 @@ class ParticleSwarm():
             self.best_individuals.append((pos_best_g, err_best_g))
             budget_end = timer()
 
-        # print final results
         print('FINAL:')
         print(pos_best_g)
         print(err_best_g)
