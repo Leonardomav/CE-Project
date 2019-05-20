@@ -488,7 +488,7 @@ class AntColony:
                     self.shortest_distance = ant.get_distance_traveled()
                     self.shortest_path_seen = ant.get_route()
 
-            self.best_individuals.append(self.shortest_path_seen)
+            self.best_individuals.append([self.shortest_path_seen, self.shortest_distance])
             self.fitness_averages.append(fit_total / self.ant_count)
             # decay current pheromone values and add all pheromone values we
             # saw during traversal (from ant_updated_pheromone_map)
