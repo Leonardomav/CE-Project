@@ -51,7 +51,7 @@ def histogram(data,title,xlabel,ylabel,bins=25):
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
     plt.show()
-    
+
 def histogram_norm(data,title,xlabel,ylabel,bins=20):
     plt.hist(data,normed=1,bins=bins)
     plt.title(title)
@@ -123,15 +123,43 @@ def mann_whitney(data1,data2):
     non parametric
     two samples
     independent
-    """    
-    return st.mannwhitneyu(data1, data2, 'less')
+    """
+    data1_with_index = []
+    data2_with_index = []
+    data1_ranks = []
+    data2_ranks = []
+    for index in range(len(data1)):
+        data1_with_index.append((data1[index], index))
+    for index in range(len(data2)):
+        data2_with_index.append((data2[index], index))
+
+    sorted_data1 = sorted(data1_with_index, key=lambda tup: tup[0])
+    sorted_data2 = sorted(data2_with_index, key=lambda tup: tup[0])
+
+    for rank in range(len(sorted_data1)):
+        data1_ranks.append([rank+1,sorted_data1[rank][1]])
+    for rank in range(len(sorted_data2)):
+        data2_ranks.append([rank+1,sorted_data2[rank][1]])
+
+    sorted_ranks1 = sorted(data1_ranks, key= lambda tup: tup[1])
+    sorted_ranks2 = sorted(data2_ranks, key= lambda tup: tup[1])
+
+    final_data1 = []
+    final_data2 = []
+
+    for rank, index in sorted_ranks1:
+        final_data1.append(rank)
+    for rank, index in sorted_ranks2:
+        final_data2.append(rank)
+
+    return st.mannwhitneyu(final_data1, final_data2,False, 'less')
 
 def wilcoxon(data1,data2):
     """
     non parametric
     two samples
     dependent
-    """     
+    """
     return st.wilcoxon(data1,data2)
 
 def kruskal_wallis(data):
@@ -139,7 +167,7 @@ def kruskal_wallis(data):
     non parametric
     many samples
     independent
-    """     
+    """
     H,pval = st.kruskal(*data)
     return (H,pval)
 
@@ -148,10 +176,10 @@ def friedman_chi(data):
     non parametric
     many samples
     dependent
-    """     
+    """
     F,pval = st.friedmanchisquare(*data)
-    return (F,pval)    
-    
+    return (F,pval)
+
 # Effect size
 def effect_size_t(stat,df):
     r = np.sqrt(stat**2/(stat**2 + df))
@@ -179,7 +207,7 @@ def effect_size_wx(stat,n, n_ob):
     std = np.sqrt(n*(n+1)*(2*n+1)/24)
     z_score = (stat - mean)/std
     return z_score/np.sqrt(n_ob)
-    
+
 if __name__ == '__main__':
     pso_small = []
     pso_medium = []
@@ -202,12 +230,12 @@ if __name__ == '__main__':
         lines = f.readlines()
         f.close()
         pso_large.append(float(lines[-1].split(',')[-2]))
-        
+
         f = open('test_results/aco_small_a_1_b_5_e_0.3_' + str(i) + '.csv')
         lines = f.readlines()
         f.close()
         aco_small.append(float(lines[-1].split(',')[-2]))
-        
+
         f = open('test_results/aco_medium_a_1_b_5_e_0.6_' + str(i) + '.csv')
         lines = f.readlines()
         f.close()
