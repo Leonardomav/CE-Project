@@ -118,7 +118,7 @@ def one_way_ind_anova(data):
 
 
 # Non Parametric
-def mann_whitney(data1,data2):
+def mann_whitney_less(data1,data2):
     """
     non parametric
     two samples
@@ -152,7 +152,44 @@ def mann_whitney(data1,data2):
     for rank, index in sorted_ranks2:
         final_data2.append(rank)
 
-    return st.mannwhitneyu(final_data1, final_data2,False, 'less')
+    return st.mannwhitneyu(final_data1, final_data2, False, 'less')
+
+# Non Parametric
+def mann_whitney_equal(data1,data2):
+    """
+    non parametric
+    two samples
+    independent
+    """
+    data1_with_index = []
+    data2_with_index = []
+    data1_ranks = []
+    data2_ranks = []
+    for index in range(len(data1)):
+        data1_with_index.append((data1[index], index))
+    for index in range(len(data2)):
+        data2_with_index.append((data2[index], index))
+
+    sorted_data1 = sorted(data1_with_index, key=lambda tup: tup[0])
+    sorted_data2 = sorted(data2_with_index, key=lambda tup: tup[0])
+
+    for rank in range(len(sorted_data1)):
+        data1_ranks.append([rank+1,sorted_data1[rank][1]])
+    for rank in range(len(sorted_data2)):
+        data2_ranks.append([rank+1,sorted_data2[rank][1]])
+
+    sorted_ranks1 = sorted(data1_ranks, key= lambda tup: tup[1])
+    sorted_ranks2 = sorted(data2_ranks, key= lambda tup: tup[1])
+
+    final_data1 = []
+    final_data2 = []
+
+    for rank, index in sorted_ranks1:
+        final_data1.append(rank)
+    for rank, index in sorted_ranks2:
+        final_data2.append(rank)
+
+    return st.mannwhitneyu(final_data1, final_data2, False)
 
 def wilcoxon(data1,data2):
     """
@@ -259,9 +296,17 @@ if __name__ == '__main__':
     a, p = test_normal_sw(np.array(aco_large))
     print("aco large:", p < 0.05)
 
-    a, p = mann_whitney(np.array(pso_small), np.array(aco_small))
+
+    a, p = mann_whitney_equal(np.array(pso_small), np.array(aco_small))
+    print("Reject pso_small = aco_small:", p < 0.01)
+    a, p = mann_whitney_equal(np.array(pso_medium), np.array(aco_medium))
+    print("Reject pso_medium = aco_medium:", p < 0.01)
+    a, p = mann_whitney_equal(np.array(pso_large), np.array(aco_large))
+    print("Reject pso_large = aco_large:", p < 0.01)
+
+    a, p = mann_whitney_less(np.array(pso_small), np.array(aco_small))
     print("Reject pso_small < aco_small:", p < 0.01)
-    a, p = mann_whitney(np.array(pso_medium), np.array(aco_medium))
+    a, p = mann_whitney_less(np.array(pso_medium), np.array(aco_medium))
     print("Reject pso_medium < aco_medium:", p < 0.01)
-    a, p = mann_whitney(np.array(pso_large), np.array(aco_large))
+    a, p = mann_whitney_less(np.array(pso_large), np.array(aco_large))
     print("Reject pso_large < aco_large:", p < 0.01)
