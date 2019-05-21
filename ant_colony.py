@@ -1,6 +1,8 @@
 from threading import Thread
 from tsp import le_coordenadas_tsp, dicio_cidades, distance
 from timeit import default_timer as timer
+
+
 class AntColony:
     class ant(Thread):
         def __init__(self, init_location, possible_locations, pheromone_map,
@@ -298,7 +300,7 @@ class AntColony:
 
         # pheromone_evaporation_coefficient
         if (not isinstance(pheromone_evaporation_coefficient, int)
-                ) and not isinstance(pheromone_evaporation_coefficient, float):
+            ) and not isinstance(pheromone_evaporation_coefficient, float):
             raise TypeError(
                 "pheromone_evaporation_coefficient must be int or float")
 
@@ -307,7 +309,7 @@ class AntColony:
 
         # pheromone_constant
         if (not isinstance(pheromone_constant, int)
-                ) and not isinstance(pheromone_constant, float):
+            ) and not isinstance(pheromone_constant, float):
             raise TypeError("pheromone_constant must be int or float")
 
         self.pheromone_constant = float(pheromone_constant)
@@ -455,7 +457,6 @@ class AntColony:
         budget_end = timer()
         while (budget_end - budget_start) < self.time_budget:
             # start the multi-threaded ants, calls ant.run() in a new thread
-            #print(budget_end - budget_start, "/", self.time_budget)
             for ant in self.ants:
                 ant.start()
 
@@ -488,7 +489,8 @@ class AntColony:
                     self.shortest_distance = ant.get_distance_traveled()
                     self.shortest_path_seen = ant.get_route()
 
-            self.best_individuals.append([self.shortest_path_seen, self.shortest_distance])
+            self.best_individuals.append(
+                [self.shortest_path_seen, self.shortest_distance])
             self.fitness_averages.append(fit_total / self.ant_count)
             # decay current pheromone values and add all pheromone values we
             # saw during traversal (from ant_updated_pheromone_map)
@@ -518,6 +520,7 @@ class AntColony:
             ret.append(self.id_to_key[id])
 
         return ret
+
 
 if __name__ == "__main__":
     SmallWorld = le_coordenadas_tsp('test_cases/monalisa.tsp')

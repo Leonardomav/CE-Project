@@ -90,9 +90,7 @@ def run_aco(filename, map_param, num_ants, maxiter,
         large_world_solution = read_solution()
         dicio = dicio_cidades(large_world)
 
-    sol = [0, 21, 48, 31, 17, 30, 20, 16, 2, 44, 18, 40, 7, 8, 9, 42, 32, 50, 10, 51, 13, 12, 46, 25, 26, 27, 11, 24, 3, 47, 23, 5, 4, 14, 37, 39, 36, 38, 35, 34, 33, 43, 45, 15, 28, 49, 19, 22, 29, 41, 6, 1]
-    f = eval_solution(distance, dicio)
-    print(f(sol, dicio))
+   
 
     colony = AntColony(
         dicio,
