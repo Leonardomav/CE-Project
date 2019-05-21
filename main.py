@@ -235,6 +235,6 @@ def main():
 if __name__ == "__main__":
     #filename = "test_results/so_medium_w_0.6_cs_1_1.csv"
     converter = CsvConverter(filename=None, data=None)
-    converter.aco_to_graph(path="./test_results/")
+    converter.pso_to_graph(path="./test_results/")
 
     #main()

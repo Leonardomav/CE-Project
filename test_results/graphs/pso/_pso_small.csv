@@ -1,4 +1,4 @@
-"Config, Fitness Average",Best Average (Fitness),Best Individual (Fitness)
+Config,Fitness Average,Best Average (Fitness),Best Individual (Fitness)
 pso_small_w_0.6_cs_1,25632.795022514452,18007.775064731675,16882.798920929432
 pso_small_w_0.9_cs_1,25654.72445974422,18714.614895870844,18043.79576103404
 pso_small_w_0.6_cs_2,27411.056759400028,18334.163386224973,18334.163386224973
