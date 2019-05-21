@@ -21,12 +21,13 @@ def eval_solution(distance_callback, dicio):
             total_distance += distance_callback(
                 dicio[solution[i - 1]], dicio[solution[i]])
         return total_distance
+
     def evaluate(solution, dicio):
         num_cidades = len(solution)
         comp = 0
         for i in range(num_cidades):
-                j = (i + 1) % num_cidades
-                comp += distance_callback(dicio[solution[i]], dicio[solution[j]])
+            j = (i + 1) % num_cidades
+            comp += distance_callback(dicio[solution[i]], dicio[solution[j]])
         return comp
 
     return evaluate
@@ -34,7 +35,7 @@ def eval_solution(distance_callback, dicio):
 
 def run_pso(filename, map_param, num_particles,
             maxiter, weight, cognitive, social):
-    ''' PSO Worker '''
+    """ PSO Worker """
     if map_param is 1:
         small_world = le_coordenadas_tsp("test_cases/berlin52.tsp")
         small_world_solution = read_solution()
@@ -90,7 +91,10 @@ def run_aco(filename, map_param, num_ants, maxiter,
         large_world_solution = read_solution()
         dicio = dicio_cidades(large_world)
 
-   
+    sol = [0, 21, 48, 31, 17, 30, 20, 16, 2, 44, 18, 40, 7, 8, 9, 42, 32, 50, 10, 51, 13, 12, 46, 25, 26, 27, 11, 24, 3,
+           47, 23, 5, 4, 14, 37, 39, 36, 38, 35, 34, 33, 43, 45, 15, 28, 49, 19, 22, 29, 41, 6, 1]
+    f = eval_solution(distance, dicio)
+    print(f(sol, dicio))
 
     colony = AntColony(
         dicio,
@@ -118,8 +122,7 @@ def run_aco(filename, map_param, num_ants, maxiter,
 
 
 def main():
-    
-    ''' Main function worker '''
+    """ Main function worker """
     parser = argparse.ArgumentParser(
         description="Evolutionary Computing project. Ant Colony Optimization and Particle Swarm Optimization implementations for Travelling Salesperson Problem.")
     group = parser.add_mutually_exclusive_group()
@@ -191,8 +194,8 @@ def main():
     args = parser.parse_args()
 
     if args.aco == False and args.pso == False:
-            print("DEBUGGING")
-            run_pso('a.csv', 1, 10, 10, 0.5, 1, 2)
+        print("DEBUGGING")
+        run_pso('a.csv', 1, 10, 10, 0.5, 1, 2)
     if args.file is None:
         print("No storage file provided")
     elif args.population is None:
@@ -211,8 +214,8 @@ def main():
                     args.population), int(
                     args.iterations), float(
                     args.weight), float(
-                        args.cognitive), float(
-                            args.social))
+                    args.cognitive), float(
+                    args.social))
     elif args.aco:
         if args.alpha is None or args.beta is None or args.evaporation_coeficient is None:
             print("Lacking algorithm params. Call --help")
@@ -223,11 +226,14 @@ def main():
                     args.population), int(
                     args.iterations), float(
                     args.alpha), float(
-                        args.beta), float(
-                            args.evaporation_coeficient))
+                    args.beta), float(
+                    args.evaporation_coeficient))
     else:
         print("No args given. Call --help")
 
 
 if __name__ == "__main__":
-	main()
+    filename = "test_results/so_medium_w_0.6_cs_1_1.csv"
+    converter = CsvConverter(filename=None, data=None)
+    converter.aco_to_graph(path="./test_results/")
+    #main()
