@@ -3,6 +3,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import csv
 
 
 class CsvConverter():
@@ -109,6 +110,14 @@ class CsvConverter():
                         plt.savefig('./test_results/graphs/aco/' + file + '.png')
                         plt.show()
 
+                        with open('./test_results/graphs/aco/' + file, 'w',  newline='') as f:
+
+                            writer = csv.writer(f)
+                            writer.writerow(["Fitness Average", "Best Average (Fitness)", "Best Individual (Fitness)"])
+                            rows = zip(FitAverage, BestAverage, BestIndiv)
+                            for val in rows:
+                                writer.writerow([val[0], val[1], val[2]])
+
     def pso_to_graph(self, path):
 
         for map in ["large", "medium", "small"]:
@@ -150,3 +159,12 @@ class CsvConverter():
                     plt.legend()
                     plt.savefig('./test_results/graphs/pso/' + file + '.png')
                     plt.show()
+
+                    with open('./test_results/graphs/pso/' + file, 'w',  newline='') as f:
+
+                        writer = csv.writer(f)
+                        writer.writerow(["Fitness Average", "Best Average (Fitness)", "Best Individual (Fitness)"])
+                        rows = zip(FitAverage, BestAverage, BestIndiv)
+                        for val in rows:
+                            writer.writerow([val[0], val[1], val[2]])
+
