@@ -131,7 +131,7 @@ class CsvConverter():
             with open('./test_results/graphs/aco/_aco_' + map + '.csv', 'w', newline='') as f:
 
                 writer = csv.writer(f)
-                writer.writerow(["Config, Fitness Average", "Best Average (Fitness)", "Best Individual (Fitness)"])
+                writer.writerow(["Config", "Fitness Average", "Best Average (Fitness)", "Best Individual (Fitness)"])
                 rows = zip(last_config, last_FitAverage, last_BestAverage, last_BestIndiv)
                 for val in rows:
                     writer.writerow([val[0], val[1], val[2], val[3]])
@@ -199,7 +199,7 @@ class CsvConverter():
             with open('./test_results/graphs/pso/_pso_' + map + ".csv", 'w', newline='') as f:
 
                 writer = csv.writer(f)
-                writer.writerow(["Config, Fitness Average", "Best Average (Fitness)", "Best Individual (Fitness)"])
+                writer.writerow(["Config", "Fitness Average", "Best Average (Fitness)", "Best Individual (Fitness)"])
                 rows = zip(last_config, last_FitAverage, last_BestAverage, last_BestIndiv)
                 for val in rows:
                     writer.writerow([val[0], val[1], val[2], val[3]])
