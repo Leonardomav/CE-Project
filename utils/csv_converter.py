@@ -67,6 +67,10 @@ class CsvConverter():
     def aco_to_graph(self, path):
 
         for map in ["large", "medium", "small"]:
+            last_config = []
+            last_BestAverage = []
+            last_FitAverage = []
+            last_BestIndiv = []
             for a in [1, 5]:
                 for b in [2.5, 5]:
                     for e in [0.3, 0.6]:
@@ -102,6 +106,12 @@ class CsvConverter():
                                     BestIndivAux[i] if i >= len(BestIndiv) or BestIndivAux[i] < BestIndiv[i] else
                                     BestIndiv[i] for i in range(len(BestIndivAux))]
 
+                            if i == 29:
+                                last_config.append("aco_" + map + "_a_" + str(a) + "_b_" + str(b) + "_e_" + str(e))
+                                last_BestIndiv.append(BestIndiv[-1])
+                                last_BestAverage.append(BestAverage[-1])
+                                last_FitAverage.append(FitAverage[-1])
+
                         plt.plot(BestIndiv, label='Best Individual (Fitness)')
                         plt.plot(FitAverage, label='Fitness Average')
                         plt.plot(BestAverage, label='Best Average (Fitness)')
@@ -118,9 +128,21 @@ class CsvConverter():
                             for val in rows:
                                 writer.writerow([val[0], val[1], val[2]])
 
+            with open('./test_results/graphs/aco/_aco_' + map + '.csv', 'w', newline='') as f:
+
+                writer = csv.writer(f)
+                writer.writerow(["Config, Fitness Average", "Best Average (Fitness)", "Best Individual (Fitness)"])
+                rows = zip(last_config, last_FitAverage, last_BestAverage, last_BestIndiv)
+                for val in rows:
+                    writer.writerow([val[0], val[1], val[2], val[3]])
+
     def pso_to_graph(self, path):
 
         for map in ["large", "medium", "small"]:
+            last_config = []
+            last_BestAverage = []
+            last_FitAverage = []
+            last_BestIndiv = []
             for cs in [1, 2, 3]:
                 for w in [0.6, 0.9]:
                     BestIndiv = []
@@ -152,6 +174,12 @@ class CsvConverter():
                                 BestIndivAux[i] if i >= len(BestIndiv) or BestIndivAux[i] < BestIndiv[i] else
                                 BestIndiv[i] for i in range(len(BestIndivAux))]
 
+                        if i == 29:
+                            last_config.append("pso_" + map + "_w_" + str(w) + "_cs_" + str(cs))
+                            last_BestIndiv.append(BestIndiv[-1])
+                            last_BestAverage.append(BestAverage[-1])
+                            last_FitAverage.append(FitAverage[-1])
+
                     plt.plot(BestIndiv, label='Best Individual (Fitness)')
                     plt.plot(FitAverage, label='Fitness Average')
                     plt.plot(BestAverage, label='Best Average (Fitness)')
@@ -168,3 +196,10 @@ class CsvConverter():
                         for val in rows:
                             writer.writerow([val[0], val[1], val[2]])
 
+            with open('./test_results/graphs/pso/_pso_' + map + ".csv", 'w', newline='') as f:
+
+                writer = csv.writer(f)
+                writer.writerow(["Config, Fitness Average", "Best Average (Fitness)", "Best Individual (Fitness)"])
+                rows = zip(last_config, last_FitAverage, last_BestAverage, last_BestIndiv)
+                for val in rows:
+                    writer.writerow([val[0], val[1], val[2], val[3]])
