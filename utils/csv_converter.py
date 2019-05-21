@@ -66,18 +66,18 @@ class CsvConverter():
     def aco_to_graph(self, path):
 
         for map in ["large", "medium", "small"]:
-            for a in [1 ,5]:
+            for a in [1, 5]:
                 for b in [2.5, 5]:
                     for e in [0.3, 0.6]:
+                        BestIndiv = []
+                        FitAverage = []
+                        BestAverage = []
                         for i in range(30):
-                            file = "aco_" + map + "_a_" + str(a) + "_b_" + str(b) + "_e_" + str(e) + "_" + str(i + 1) + ".csv"
+                            file = "aco_" + map + "_a_" + str(a) + "_b_" + str(b) + "_e_" + str(e) + "_" + str(
+                                i + 1) + ".csv"
                             file_i = path + file
                             df = pd.read_csv(file_i, skiprows=2)
                             df['Best Individual (Fitness)'] = pd.to_numeric(df['Best Individual (Fitness)'])
-
-                            BestIndiv = []
-                            FitAverage = []
-                            BestAverage = []
 
                             if i == 0:
                                 BestAverage.extend(df['Best Individual (Fitness)'].tolist())
@@ -86,19 +86,67 @@ class CsvConverter():
 
                             else:
                                 BestAverageAux = (df['Best Individual (Fitness)'].tolist())
-                                BestAverage = [((BestAverage[i] + BestAverageAux[i]) / 2) if i < len(BestAverage) else BestAverageAux[i]
+                                BestAverage = [((BestAverage[i] + BestAverageAux[i]) / 2) if i < len(BestAverage) else
+                                               BestAverageAux[i]
                                                for i in range(len(BestAverageAux))]
+
                                 FitAverageAux = (df['Fitness Average'].tolist())
-                                FitAverage = [((FitAverage[i] + FitAverageAux[i]) / 2) if i < len(FitAverage) else FitAverageAux[i] for
-                                              i in range(len(FitAverageAux))]
+                                FitAverage = [
+                                    ((FitAverage[i] + FitAverageAux[i]) / 2) if i < len(FitAverage) else FitAverageAux[
+                                        i] for
+                                    i in range(len(FitAverageAux))]
+
                                 BestIndivAux = (df['Best Individual (Fitness)'].tolist())
-                                BestIndiv = [BestIndivAux[i] if i >= len(BestIndiv) or BestIndivAux[i] > BestIndiv[i] else BestIndiv[i] for i in range(len(BestIndivAux))]
+                                BestIndiv = [
+                                    BestIndivAux[i] if i >= len(BestIndiv) or BestIndivAux[i] < BestIndiv[i] else
+                                    BestIndiv[i] for i in range(len(BestIndivAux))]
 
                         plt.plot(BestIndiv, label='Best Individual (Fitness)')
                         plt.plot(FitAverage, label='Fitness Average')
-                        plt.plot(BestIndiv, label='Best Average (Fitness)')
+                        plt.plot(BestAverage, label='Best Average (Fitness)')
 
                         plt.legend()
-                        plt.savefig('./test_results/graphs/' + file + '.png')
+                        plt.savefig('./test_results/graphs/aco/' + file + '.png')
                         plt.show()
 
+    def pso_to_graph(self, path):
+
+        for map in ["large", "medium", "small"]:
+            for cs in [1, 2, 3]:
+                for w in [0.6, 0.9]:
+                    BestIndiv = []
+                    FitAverage = []
+                    BestAverage = []
+                    for i in range(30):
+                        file = "pso_" + map + "_w_" + str(w) + "_cs_" + str(cs) + "_" + str(i + 1) + ".csv"
+                        file_i = path + file
+                        df = pd.read_csv(file_i, skiprows=2)
+                        df['Best Individual (Fitness)'] = pd.to_numeric(df['Best Individual (Fitness)'])
+
+                        if i == 0:
+                            BestAverage.extend(df['Best Individual (Fitness)'].tolist())
+                            FitAverage.extend(df['Fitness Average'].tolist())
+                            BestIndiv.extend(df['Best Individual (Fitness)'].tolist())
+
+                        else:
+                            BestAverageAux = (df['Best Individual (Fitness)'].tolist())
+                            BestAverage = [((BestAverage[i] + BestAverageAux[i]) / 2) if i < len(BestAverage) else
+                                           BestAverageAux[i]
+                                           for i in range(len(BestAverageAux))]
+                            FitAverageAux = (df['Fitness Average'].tolist())
+                            FitAverage = [
+                                ((FitAverage[i] + FitAverageAux[i]) / 2) if i < len(FitAverage) else FitAverageAux[
+                                    i] for
+                                i in range(len(FitAverageAux))]
+                            BestIndivAux = (df['Best Individual (Fitness)'].tolist())
+                            BestIndiv = [
+                                BestIndivAux[i] if i >= len(BestIndiv) or BestIndivAux[i] < BestIndiv[i] else
+                                BestIndiv[i] for i in range(len(BestIndivAux))]
+
+                    plt.plot(BestIndiv, label='Best Individual (Fitness)')
+                    plt.plot(FitAverage, label='Fitness Average')
+                    plt.plot(BestAverage, label='Best Average (Fitness)')
+
+                    plt.legend()
+                    plt.savefig('./test_results/graphs/pso/' + file + '.png')
+                    plt.show()
